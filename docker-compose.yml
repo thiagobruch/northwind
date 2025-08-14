@@ -1,0 +1,31 @@
+    version: '3.8'
+    services:
+      web:
+        image: docker.io/thiagobruch/webserver_php8:latest
+        ports:
+          - "8087:80"
+        volumes:
+          - ./html:/var/www/html # Mount your web files here
+        depends_on:
+          - db
+        container_name: Northwind-Web
+
+      db:
+        image: mysql:8.1.0 # Or desired MySQL version
+        environment:
+          MYSQL_ROOT_PASSWORD: your_root_password
+          MYSQL_DATABASE: Northwind # Database for Northwind
+        volumes:
+          - ./mysql_data:/var/lib/mysql # Persistent data storage
+        ports:
+          - "3306:3306"
+        container_name: Northwind-DB
+#      phpmyadmin:
+#        image: phpmyadmin/phpmyadmin
+#        ports:
+#          - "8088:80"
+#        environment:
+#          PMA_HOST: db
+#          MYSQL_ROOT_PASSWORD: your_root_password
+#        depends_on:
+#          - db
